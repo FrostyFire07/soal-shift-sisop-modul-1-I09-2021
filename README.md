@@ -119,6 +119,47 @@ Tidak ada kendala yang berarti, sempat kebingungan maksud dimasukkan ke shell.
 NUMBER 3
 
 no. a 
-- get the picture from website "https://loremflickr.com/320/240/kitten" because there are 23 pictures, we need looping to do that operation from looping 1 until      23 using -wget command and save the logs to the file "Foto.log"
-- because the pictures is random and we can get the same picture, we must to delete the same one (2nd looping)
-- then, save the pictures with format name "Koleksi_xx" start from "Koleksi_01, Koleksi_02, ..." (3rd looping)
+
+- download 23 pictures from website "https://loremflickr.com/320/240/kitten" because there are 23 pictures, we need wget command to download all the pictures and save the logs to the file "Foto.log"
+- because the pictures is random and we can download the same picture, we must to delete the same one using rdfind -deleteduplicates command
+- then, save the pictures with format name "Collection_xx" start from "Collection_01, Collection_02, ..." which is using if else for the digit less than 10, add 0 in front of the number (ex 01,02,03,...) and for the rest just following it (11,12,13,...)
+
+![Screenshot from 2021-04-04 21-27-31](https://user-images.githubusercontent.com/77782259/113513190-8d1a3180-9592-11eb-9350-1bffaf2021d7.png)
+
+no. b
+
+- the question asked to run the script once a day at 8 pm for certain dates of each month, i.e. from the 1st seven days once (1.8,...), as well as from the 2nd four days once (2,6,...). to make it neater, the downloaded image, along with its logs, are moved to a folder with the download date name in the format "DD-MM-YYYY" (example: "13-03-2023")
+- to solve it, we need crontab to run the script as the question wish using '0 20 1-31/7,2-31/4 * * bash /home/julius/Documents/SISOP/Modul_1/3b.sh' it can be readed Every 20:00 from 1-31 every 7 days and from 2-31 every 4 days. 
+- then, we need to create new folder using the mkdir command and then rename it with the date format below "DD-MM-YYYY" which we can retype it to be 'foldername=$(date +"%d-%m%Y")'
+- for the last, move the pictures and the logs before into the latest folder that we create instead
+
+![Screenshot from 2021-04-04 21-29-03](https://user-images.githubusercontent.com/77782259/113513620-c6ec3780-9594-11eb-88a9-4ff391153c3b.png)
+
+ISSUE : Sometimes the crontab doesn't run well (it can be run in background but we can't see any changes on the folder)
+
+no. c
+
+- the question tells us to download a picture of a rabbit from "https://loremflickr.com/320/240/bunny" and ask to postpone the picture of a cat and rabbit alternately (example: the 30th of the cat > the 31st of the rabbit > the 1st of the cat > ... ). To distinguish between a folder containing a picture of a cat and a picture of a rabbit, the folder name is prefixed "Cat_" or "Rabbit_" (example: "Cat_13-03-2023").
+- to distinguish we download our cat or rabbit using odd / even date whereas when the date is even we download a picture of a cat whereas if the odd date we download rabbit
+- then we create a new folder with date format "DD-MM-YYYY" which we can retype it to be 'foldername=$(date +"%d-%m%Y")' same as the 3b question, if the date is even, name the folder Cat_(date format) whereas if the date is odd, name the folder Rabbit_(date format)
+- then download the image and log according to the download on the date of the day as well, if the date is even date, download the picture of the cat and its logs while if the date is odd date, download the rabbit image and its logs and save it in the customized folder before.
+
+![Screenshot from 2021-04-04 21-34-22](https://user-images.githubusercontent.com/77782259/113514221-9659cd00-9597-11eb-9956-9705c88e6484.png)
+![Screenshot from 2021-04-04 21-33-56](https://user-images.githubusercontent.com/77782259/113514231-a376bc00-9597-11eb-8016-422aebc46866.png)
+
+no. d
+
+- the question asked to create a script that will move the entire folder to a zip named "Collection.zip" and lock the zip with a password in the form of the current date with the format "MMDDYYYY" (example: "03032003").
+- for that, we need to declare a new variable to save the date format which will later be used for the password of the zip
+- then, make a zip with zip command which name is "Collection.zip" and use -P to make a zip password using the date format before and move the entire folder that has name Cat and Rabbit into the zip (so we use Cat* and Rabbit*, whether the -r is for checking recursively)
+- then after all folder named Cat and Rabbit zipped, remove the Cat and Rabbit folder to make it neatly and leave no trace of
+
+![Screenshot from 2021-04-04 21-36-37](https://user-images.githubusercontent.com/77782259/113514516-50056d80-9599-11eb-8c05-bd0bd39da784.png)
+![Screenshot from 2021-04-04 21-36-51](https://user-images.githubusercontent.com/77782259/113514527-55fb4e80-9599-11eb-8ac2-6005973d9597.png)
+
+no. e
+
+- 
+
+
+
