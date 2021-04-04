@@ -1,33 +1,25 @@
 #!/bin/bash
 
-for loop in {1..23}; do
-#if [ $loop -lt 10 ]; then
-#    wget -O Koleksi_0$loop -a "Koleksi.log" https://loremflickr.com/320/240/kitten
-     #echo "Koleksi0$loop"
-#else
-    #echo "Koleksi$loop"
-    wget -a  Koleksi$loop -o  "Foto.log" https://loremflickr.com/320/240/kitten
-    max=$((loop-1))
-    for (( i=1; i<=max; i++ )) do
-        if [ -f Koleksi$i ]; then
-            if cmp Koleksi$i Koleksi$loop &> /dev/null; then
-                rm Koleksi$loop break;
-            fi
-        fi
-    done
-#fi;
+dir=/home/julius/Documents/SISOP/Modul_1
+> "$dir"/foto.log
+
+for ((i=1; i<=23; i++))
+do
+	if [ $i -lt 10 ]
+		then wget -a "$dir"/Foto.log "https://loremflickr.com/320/240/kitten" -O "$dir"/Collection_0"$i"
+	else wget -a "$dir"/Foto.log "https://loremflickr.com/320/240/kitten" -O "$dir"/Collection_"$i"
+	fi
 done
 
-for loop in {1..23}; do
-    if [ ! -f Koleksi$loop ]; then
-        for (( i=23; loop<i; i-- )) do
-            if [ -f Koleksi$i ]; then
-                mv Koleksi$i Koleksi$loop break
-            fi
-        done
-    fi
-done
+rdfind -deleteduplicates true /home/julius/Documents/SISOP/Modul_1
 
-for loop in {1..9}; do
-    mv Koleksi_$loop Koleksi_0$loop
+i=1
+cd "$dir"
+for a in Collection_*
+do
+	if [ $i -lt 10 ]
+		then mv -- "$a" "Collection_0$i"
+	else mv -- "$a" "Collection_$i"
+	fi
+let i=$i+1
 done
